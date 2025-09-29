@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BMS Kids' clothing collection: T-Shirts, Dresses, Jeans, Party Wear with 3D interactive previews and affiliate shopping links to Ajio and Amazon">
+    <meta name="keywords" content="BMS kids t-shirts, kids dresses, kids jeans, kids party wear, affiliate shopping, 3D clothing">
+    <title>Boys' Collection | BMS - Be Your Modern Self</title>
+    <link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-family="Poppins, sans-serif" font-size="60" fill="#e94560" text-anchor="middle" font-weight="bold">BMS</text></svg>'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-white: #ffffff;
+            --bg-pink: #fce4ec;
+            --text-dark: #333333;
+            --text-muted: #666666;
+            --border-pink: #f8bbd9;
+            --accent-primary: #e94560;
+            --accent-secondary: #4fc3f7;
+            --accent-tertiary: #ffd54f;
+        }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        /* Navigation Bar */
+        .navbar {
+            background: var(--bg-pink);
+            border-bottom: 1px solid var(--border-pink);
+        }
+        
+        .navbar-brand, .nav-link {
+            color: var(--text-dark) !important;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-tertiary) !important; /* Yellow accent for kids */
+        }
+        
+        header { 
+            background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-pink) 100%); 
+            color: var(--text-dark); 
+            padding: 2rem 1rem; 
+            text-align: center; 
+            border-bottom: 1px solid var(--border-pink);
+        }
+        
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-tertiary);
+        }
+        
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        .sub-category-section {
+            padding: 3rem 0;
+            background: var(--bg-white);
+        }
+        
+        .sub-category-title {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            text-align: center;
+            position: relative;
+        }
+        
+        .sub-category-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-tertiary), var(--border-pink));
+        }
+        
+        /* Preview Banner for Each Sub-Category */
+        .sub-preview-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(248, 187, 217, 0.2); /* Pink shadow */
+        }
+        
+        /* 3D Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+            gap: 2rem;
+            padding: 0 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: start;
+        }
+        
+        /* Responsive: 1 column on mobile */
+        @media (max-width: 900px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        .product-card {
+            background: var(--bg-pink);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-pink);
+            cursor: pointer;
+            perspective: 1000px; /* Enables 3D space */
+            height: 100%;
+            color: var(--text-dark);
+        }
+        
+        .product-card-inner {
+            transition: transform 0.4s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .product-card:hover .product-card-inner {
+            transform: translateY(-10px) rotateX(10deg) translateZ(20px); /* 3D lift and tilt */
+            box-shadow: 0 25px 50px rgba(255, 213, 79, 0.2); /* Yellow accent for kids */
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-tertiary), var(--border-pink));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .product-img {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: block;
+            flex-shrink: 0;
+        }
+        
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .product-price {
+            color: var(--accent-tertiary);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .affiliate-btn {
+            background: linear-gradient(135deg, var(--accent-tertiary), #ffb300);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .affiliate-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 213, 79, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .affiliate-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        footer {
+            background: var(--bg-pink);
+            color: var(--text-dark);
+            padding: 3rem 0 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-pink);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-icon {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent-tertiary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--text-dark);
+        }
+        
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* BMS Logo Styles */
+        .bms-logo { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-decoration: none; 
+            color: var(--text-dark); 
+            transition: all 0.3s ease; 
+        }
+        
+        .bms-logo:hover { 
+            transform: scale(1.05); 
+            text-shadow: 0 0 10px var(--accent-primary); 
+        }
+        
+        .bms-logo-svg { 
+            width: 120px; 
+            height: 60px; 
+        }
+        
+        @media (max-width: 768px) {
+            .page-title { font-size: 2.2rem; }
+            .product-grid { grid-template-columns: 1fr; padding: 0 1rem; gap: 1.5rem; }
+            .product-card:hover .product-card-inner { transform: translateY(-5px) rotateX(5deg); } /* Subtler on mobile */
+            .footer-links { flex-direction: column; gap: 1rem; }
+            .sub-preview-img { height: 200px; }
+            .bms-logo-svg { width: 100px; height: 50px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation with BMS Logo -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a href="index.html" class="navbar-brand bms-logo">
+                <svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" class="bms-logo-svg">
+                    <defs>
+                        <linearGradient id="bmsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:var(--accent-primary);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:var(--border-pink);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <text x="60" y="40" font-family="Poppins, Arial, sans-serif" font-size="32" fill="url(#bmsGradient)" text-anchor="middle" font-weight="700" letter-spacing="2">BMS</text>
+                    <text x="60" y="55" font-family="Poppins, Arial, sans-serif" font-size="8" fill="var(--text-muted)" text-anchor="middle" font-style="italic" font-weight="300">Be Your Modern Self</text>
+                </svg>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="mens.html">Men's</a></li>
+                    <li class="nav-item"><a class="nav-link" href="womens.html">Women's</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1 class="page-title">Boys' Collection</h1>
+        <p class="page-subtitle">Playful, comfortable, and adorable outfits for the little fashion enthusiasts</p>
+    </header>
+
+    <!-- T-Shirts Section -->
+    <section class="sub-category-section">
+        <h2 class="sub-category-title">Shirts</h2>
+        
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\1.jpg" alt=" Unisex Kids Casual Printed Shirt" class="product-img">
+                    <h3 class="product-name"> Unisex Kids Casual Printed Shirt</h3>
+                    <p class="product-price">$299</p>
+                    <a href="https://amzn.to/4nquKbU" class="affiliate-btn" target="_blank">
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\2.jpg" alt="TAGAS Toddler Boys' Striped Short Sleeve " class="product-img">
+                    <h3 class="product-name">TAGAS Toddler Boys' Striped Short Sleeve  </h3>
+                    <p class="product-price">$369</p>
+                    <a href="https://amzn.to/4nBmQwv" class="affiliate-btn" target="_blank">
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\3.jpg" alt="Toddler boys" class="product-img">
+                    <h3 class="product-name">TAGAS Toddler Boys' Striped Short Sleeve</h3>
+                    <p class="product-price">$369</p>
+                    <a href="https://amzn.to/46Cayy5" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\4.jpg" alt="Vikita Enterprise Kid Boy's Cotton" class="product-img">
+                    <h3 class="product-name"> Vikita Enterprise Kid Boy's Cotton</h3>
+                    <p class="product-price">$363</p>
+                    <a href="https://amzn.to/4mGBq4D" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\5.jpg" alt="TAGAS Boy's Checkered Relaxed Fit Shirt
+" class="product-img">
+                    <h3 class="product-name"> TAGAS Boy's Checkered Relaxed Fit Shirt
+</h3>
+                    <p class="product-price">$399</p>
+                    <a href="https://amzn.to/42fY1O8" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\6.jpg" alt="TAGAS Boy's Striped Regular Fit Shirt" class="product-img">
+                    <h3 class="product-name"> TAGAS Boy's Striped Regular Fit Shirt</h3>
+                    <p class="product-price">$349</p>
+                    <a href="https://amzn.to/3Ijur3C" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\7.jpg" alt="TAGAS Boy's Striped Regular Fit Shirt" class="product-img">
+                    <h3 class="product-name">TAGAS Boy's Striped Regular Fit Shirt</h3>
+                    <p class="product-price">$369</p>
+                    <a href="https://amzn.to/4gPsusn" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\8.jpg" alt="TAGAS Boy's Striped Regular Fit Shirt" class="product-img">
+                    <h3 class="product-name"> TAGAS Boy's Striped Regular Fit Shirt</h3>
+                    <p class="product-price">$349</p>
+                    <a href="https://amzn.to/46Zu33A" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\9.jpg" alt="Symbol Boys 100% Cotton Mandarin Denim Shirt " class="product-img">
+                    <h3 class="product-name"> Symbol Boys 100% Cotton Mandarin Denim Shirt </h3>
+                    <p class="product-price">$549</p>
+                    <a href="https://amzn.to/4pL6TW3" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\10.jpg" alt="Boys 100% Cotton Solid Casual Shirt " class="product-img">
+                    <h3 class="product-name"> Boys 100% Cotton Solid Casual Shirt </h3>
+                    <p class="product-price">$459</p>
+                    <a href="https://amzn.to/4pMkDj8" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\11.jpg" alt="CAVIO Boys Regular Fit Printed Casual Shirt and T-Shirt" class="product-img">
+                    <h3 class="product-name"> CAVIO Boys Regular Fit Printed Casual Shirt and T-Shirt</h3>
+                    <p class="product-price">$895</p>
+                    <a href="https://amzn.to/4mGxZL8" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids shirts\12.jpg" alt="CAVIO Boys Regular Fit Casual Cotton Shirt and T-Shirt" class="product-img">
+                    <h3 class="product-name"> CAVIO Boys Regular Fit Casual Cotton Shirt and T-Shirt</h3>
+                    <p class="product-price">$939</p>
+                    <a href="https://amzn.to/48GadLZ" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dresses Section -->
+    <section class="sub-category-section">
+        <h2 class="sub-category-title">Dresses</h2>
+        
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\1.jpg" alt=" Cartoon Characters Boys & Girls" class="product-img">
+                    <h3 class="product-name">Nap Chief Kids Pure Cotton Official Cartoon Characters Boys & Girls</h3>
+                    <p class="product-price">$881</p>
+                    <a href="https://amzn.to/3VZWI2p" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\2.jpg" alt="BABY GO Unisex Baby Clothing Set" class="product-img">
+                    <h3 class="product-name">BABY GO Unisex Baby Clothing Set</h3>
+                    <p class="product-price">$349</p>
+                    <a href="https://amzn.to/4pKfWXl" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\3.jpg" alt="BABY GO 100% Pure Cotton T-shirt and Shorts Set" class="product-img">
+                    <h3 class="product-name">BABY GO 100% Pure Cotton T-shirt and Shorts Set</h3>
+                    <p class="product-price">$327</p>
+                    <a href="https://amzn.to/46z3P6s" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\4.jpg" alt="Hopscotch Boy's Cotton Blend Solid Dungaree" class="product-img">
+                    <h3 class="product-name">Hopscotch Boy's Cotton Blend Solid Dungaree</h3>
+                    <p class="product-price">$719</p>
+                    <a href="https://amzn.to/3KuVMAh" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\5.jpg" alt="K K P Fashion Baby Boys Multicolor Co-Ord Set" class="product-img">
+                    <h3 class="product-name">K K P Fashion Baby Boys Multicolor Co-Ord Set</h3>
+                    <p class="product-price">$413</p>
+                    <a href="https://amzn.to/42JDQIw" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\6.jpg" alt=" Round Neck Half Sleeve T-shirt & Short Latest" class="product-img">
+                    <h3 class="product-name">ARIEL Baby Boys & Baby girls Cotton Printed Round Neck Half Sleeve T-shirt & Short Latest </h3>
+                    <p class="product-price">$270</p>
+                    <a href="https://amzn.to/4gW5UhJ" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\7.jpg" alt="Round Neck Half Sleeve T-shirt & Short" class="product-img">
+                    <h3 class="product-name">Round Neck Half Sleeve T-shirt & Short</h3>
+                    <p class="product-price">$270</p>
+                    <a href="https://amzn.to/487hKTQ" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\8.jpg" alt="Hopscotch Boy's Cotton Checkered Shirt and Jeans Set" class="product-img">
+                    <h3 class="product-name">Hopscotch Boy's Cotton Checkered Shirt and Jeans Set</h3>
+                    <p class="product-price">$1049</p>
+                    <a href="https://amzn.to/4gOKtzh" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\9.jpg" alt="Googo Gaaga Boys Cotton Checkered Track Suit Clothing Set" class="product-img">
+                    <h3 class="product-name">Googo Gaaga Boys Cotton Checkered Track Suit Clothing Set</h3>
+                    <p class="product-price">$420</p>
+                    <a href="https://amzn.to/46KvgdQ" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\10.jpg" alt="HELLCAT Boys Dress Clothing Set Combo with Tshirts & Shorts" class="product-img">
+                    <h3 class="product-name">HELLCAT Boys Dress Clothing Set Combo with Tshirts & Shorts</h3>
+                    <p class="product-price">$259</p>
+                    <a href="https://amzn.to/4mAM1Op" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\11.jpg" alt="TAGAS Young Boy" class="product-img">
+                    <h3 class="product-name">TAGAS Young Boy Solid Textured Short Sleeve Shirt And Shorts</h3>
+                    <p class="product-price">$349</p>
+                    <a href="https://amzn.to/3IvuVnf" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="kids dresses\12.jpg" alt="Printed Cotton Blend Hoodie T-shirt and Jogger" class="product-img">
+                    <h3 class="product-name">Printed Cotton Blend Hoodie T-shirt and Jogger</h3>
+                    <p class="product-price">$619</p>
+                    <a href="https://amzn.to/4mDfGGA" class="affiliate-btn" target="_blank"> <!-- Replace with real link -->
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Jeans Section
+    <section class="sub-category-section">
+        <h2 class="sub-category-title">Jeans</h2>
+        <img src="https://source.unsplash.com/1200x250/?kids-jeans-collection" alt="Jeans Collection Preview" class="sub-preview-img">
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="https://source.unsplash.com/250x200/?kids-skinny-jeans" alt="Skinny Jeans" class="product-img">
+                    <h3 class="product-name">Classic Skinny Jeans</h3>
+                    <p class="product-price">$27.99</p>
+                    <a href="#" class="affiliate-btn" target="_blank"> <!- Replace with real link 
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="https://source.unsplash.com/250x200/?kids-bootcut-jeans" alt="Bootcut Jeans" class="product-img">
+                    <h3 class="product-name">Trendy Bootcut Jeans</h3>
+                    <p class="product-price">$29.99</p>
+                    <a href="#" class="affiliate-btn" target="_blank"> <!- Replace with real link 
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="https://source.unsplash.com/250x200/?kids-distressed-jeans" alt="Distressed Jeans" class="product-img">
+                    <h3 class="product-name">Cool Distressed Jeans</h3>
+                    <p class="product-price">$24.99</p>
+                    <a href="#" class="affiliate-btn" target="_blank">  Replace with real link 
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="https://source.unsplash.com/250x200/?kids-cargo-jeans" alt="Cargo Jeans" class="product-img">
+                    <h3 class="product-name">Stylish Cargo Jeans</h3>
+                    <p class="product-price">$26.99</p>
+                    <a href="#" class="affiliate-btn" target="_blank">  Replace with real link 
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     Party Wear Section 
+    <section class="sub-category-section">
+        <h2 class="sub-category-title">Party Wear</h2>
+        <img src="https://source.unsplash.com/1200x250/?kids-party-wear-collection" alt="Party Wear Collection Preview" class="sub-preview-img">
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="https://source.unsplash.com/250x200/?kids-party-suit" alt="Party Suit" class="product-img">
+                    <h3 class="product-name">Royal Party Suit</h3>
+                    <p class="product-price">$49.99</p>
+                    <a href="#" class="affiliate-btn" target="_blank">  Replace with real link 
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="https://source.unsplash.com/250x200/?kids-party-dress" alt="Party Dress" class="product-img">
+                    <h3 class="product-name">Glamorous Party Dress</h3>
+                    <p class="product-price">$39.99</p>
+                    <a href="#" class="affiliate-btn" target="_blank">  Replace with real link 
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="https://source.unsplash.com/250x200/?kids-party-shoes" alt="Party Shoes" class="product-img">
+                    <h3 class="product-name">Elegant Party Shoes</h3>
+                    <p class="product-price">$34.99</p>
+                    <a href="#" class="affiliate-btn" target="_blank">  Replace with real link 
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-card-inner">
+                    <img src="https://source.unsplash.com/250x200/?kids-party-accessories" alt="Party Accessories" class="product-img">
+                    <h3 class="product-name">Stylish Party Accessories</h3>
+                    <p class="product-price">$19.99</p>
+                    <a href="#" class="affiliate-btn" target="_blank">  Replace with real link 
+                        <i class="fas fa-shopping-cart"></i> Buy Now
+                    </a>
+                </div>
+            </div>
+        </div>
+        -->
+    </section> 
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon" target="_blank"><i class="fab fa-pinterest-p"></i></a>
+                <a href="#" class="social-icon" target="_blank"><i class="fab fa-twitter"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="mens.html" class="footer-link">Men's Collection</a>
+                <a href="womens.html" class="footer-link">Women's Collection</a>
+                <a href="about.html" class="footer-link">About Us</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BMS - Be Your Modern Self. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
