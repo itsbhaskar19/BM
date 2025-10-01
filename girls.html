@@ -8,14 +8,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    * { box-sizing: border-box; }
     :root {
       --bg-white: #ffffff;
-      --bg-lightpink: #fce4ec;
+      --bg-pink: #fce4ec;
       --text-dark: #333333;
       --text-muted: #666666;
       --border-pink: #f8bbd9;
-      --accent-primary: #e94560; /* Pink accent for girls */
+      --accent-primary: #e94560;
+      --accent-women: #4fc3f7;
+      --accent-secondary: #4fc3f7;
+      --accent-tertiary: #ffd54f;
+      --bg-lightpink: #fce4ec;
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -24,38 +27,94 @@
       background-color: var(--bg-white);
       color: var(--text-dark);
       line-height: 1.6;
-      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
     .navbar {
-      background: var(--bg-lightpink);
+      background: var(--bg-pink);
       border-bottom: 1px solid var(--border-pink);
     }
     .navbar-brand, .nav-link {
       color: var(--text-dark) !important;
     }
     .nav-link:hover {
-      color: var(--accent-primary) !important;
+      color: var(--accent-women) !important;
     }
     header {
-      background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-lightpink) 100%);
+      background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-pink) 100%);
       color: var(--text-dark);
       padding: 2rem 1rem;
       text-align: center;
       border-bottom: 1px solid var(--border-pink);
     }
     .page-title {
-      font-size: 2.8rem;
+      font-size: 3.5rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--accent-primary);
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #e94560, #4fc3f7, #ffd54f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .page-subtitle {
-      color: var(--text-muted);
-      font-size: 1.1rem;
+      color: #666;
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    /* Category Buttons Container */
+    .category-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem 1rem;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto 3rem;
+    }
+    .category-button {
+      background: var(--bg-pink);
+      border-radius: 20px;
+      width: 200px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      box-shadow:
+        0 4px 6px rgba(79, 195, 247, 0.2),
+        0 8px 15px rgba(79, 195, 247, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      perspective: 800px;
+      user-select: none;
+      border: 1px solid var(--border-pink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .category-button:hover {
+      transform: translateY(-10px) rotateX(10deg);
+      box-shadow:
+        0 10px 20px rgba(79, 195, 247, 0.3),
+        0 15px 30px rgba(79, 195, 247, 0.2);
+    }
+    .category-preview {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+      background: white;
+      max-width: 100%;
+      display: block;
+    }
+    .category-label {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--text-dark);
+      user-select: none;
     }
     .sub-category-section {
-      padding: 3rem 0;
-      background: var(--bg-white);
+      padding: 3rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto 4rem;
     }
     .sub-category-title {
       font-size: 2.2rem;
@@ -72,107 +131,52 @@
       transform: translateX(-50%);
       width: 100px;
       height: 3px;
-      background: linear-gradient(90deg, var(--accent-primary), var(--border-pink));
-    }
-    .sub-preview-img {
-      width: 100%;
-      height: auto;
-      max-width: 100%;
-      object-fit: contain;
-      border-radius: 15px;
-      margin-bottom: 2rem;
-      box-shadow: 0 8px 25px rgba(233, 69, 96, 0.2);
-      display: block;
+      background: linear-gradient(90deg, var(--accent-women), var(--border-pink));
     }
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* Always 3 columns per row */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
       padding: 0 1rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      align-items: start;
     }
-
-    /* Responsive: 1 column on mobile */
-    @media (max-width: 900px) {
-      .product-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-    }
-
     .product-card {
-      background: var(--bg-lightpink);
+      background: var(--bg-pink);
       border-radius: 15px;
       padding: 1.5rem;
       text-align: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
       border: 1px solid var(--border-pink);
       cursor: pointer;
-      perspective: 1000px;
-      height: auto;
       color: var(--text-dark);
       display: flex;
       flex-direction: column;
-      max-width: 100%;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .product-card-inner {
-      transition: transform 0.4s ease;
-      transform-style: preserve-3d;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-    .product-card:hover .product-card-inner {
-      transform: translateY(-10px) rotateX(10deg) translateZ(20px);
-      box-shadow: 0 25px 50px rgba(233, 69, 96, 0.2);
-    }
-    .product-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent-primary), var(--border-pink));
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-    .product-card:hover::before {
-      transform: scaleX(1);
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(79, 195, 247, 0.2);
     }
     .product-img {
       width: 100%;
-      height: auto;
-      max-width: 100%;
+      height: 180px;
       object-fit: contain;
       border-radius: 10px;
       margin-bottom: 1rem;
-      display: block;
-      flex-shrink: 0;
+      background: white;
     }
     .product-name {
       font-size: 1.1rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
-      color: var(--text-dark);
       flex-grow: 1;
-      min-height: 2rem;
     }
     .product-price {
-      color: var(--accent-primary);
+      color: var(--accent-women);
       font-weight: bold;
       margin-bottom: 1rem;
       font-size: 1.2rem;
-      flex-grow: 1;
-      min-height: 1.5rem;
     }
     .affiliate-btn {
-      background: linear-gradient(135deg, var(--accent-primary), #c2185b);
+      background: linear-gradient(135deg, var(--accent-women), #0288d1);
       color: white;
       border: none;
       padding: 0.7rem 1.5rem;
@@ -182,181 +186,75 @@
       transition: all 0.3s ease;
       display: inline-block;
       width: 100%;
-      flex-shrink: 0;
-      margin-top: auto;
     }
     .affiliate-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(194, 24, 91, 0.5);
+      box-shadow: 0 5px 15px rgba(79, 195, 247, 0.3);
       color: white;
       text-decoration: none;
     }
     .affiliate-btn i {
       margin-right: 0.5rem;
     }
-    footer {
-      background: var(--bg-lightpink);
-      color: var(--text-dark);
-      padding: 3rem 0 2rem;
-      text-align: center;
-      margin-top: 4rem;
-      border-top: 1px solid var(--border-pink);
-    }
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .social-icon {
-      color: var(--text-muted);
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-    .social-icon:hover {
-      color: var(--accent-primary);
-      transform: translateY(-3px);
-    }
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-    .footer-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .footer-link:hover {
-      color: var(--text-dark);
-    }
-    .copyright {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-    .bms-logo { 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      text-decoration: none; 
-      color: var(--text-dark); 
-      transition: all 0.3s ease; 
-    }
-    .bms-logo:hover { 
-      transform: scale(1.05); 
-      text-shadow: 0 0 10px var(--accent-primary); 
-    }
-    .bms-logo-svg { 
-      width: 120px; 
-      height: 60px; 
-    }
     @media (max-width: 768px) {
-      .page-title { font-size: 2.2rem; }
-      .sub-category-section { padding: 2rem 0; }
-      .product-grid { 
-        grid-template-columns: 1fr; 
-        gap: 1.5rem; 
-        padding: 0 0.5rem;
+      .category-buttons {
+        gap: 1rem;
       }
-      .product-card { padding: 1rem; border-radius: 12px; }
-      .product-img { 
-        height: auto; 
-        max-height: 70vh;
+      .category-button {
+        width: 140px;
+        height: auto;
       }
-      .sub-preview-img { 
-        height: auto; 
-        max-height: 50vh; 
+      .category-preview {
+        height: 80px;
       }
-      .product-card:hover .product-card-inner { transform: translateY(-5px) rotateX(5deg); }
-      .footer-links { flex-direction: column; gap: 1rem; }
-      .bms-logo-svg { width: 100px; height: 50px; }
-      .product-card, .sub-preview-img { max-width: 100vw; width: 100%; }
+      .product-img {
+        height: 150px;
+      }
     }
     @media (max-width: 480px) {
-      .product-img { max-height: 60vh; }
-      .sub-preview-img { max-height: 40vh; }
-      header { padding: 1.5rem 0.5rem; }
-    }
-
-    /* New Styles for Category Buttons */
-    .category-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 2rem 0;
-      flex-wrap: wrap;
-    }
-    .category-button {
-      background: var(--bg-lightpink);
-      border-radius: 10px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      flex: 1 1 200px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 1rem;
-      border: 1px solid var(--border-pink);
-    }
-    .category-button:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(233, 69, 96, 0.2);
-    }
-    .category-preview {
-      width: 100%;
-      height: 100px;
-      object-fit: contain;
-      border-radius: 12px;
-      margin-bottom: 0.8rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      background: white;
-      
-    
-    }
-    .category-label {
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: var(--text-dark);
+      .category-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .category-button {
+        width: 80%;
+        max-width: 300px;
+      }
     }
   </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a href="index.html" class="navbar-brand bms-logo" aria-label="BMS Home">
-        <svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" class="bms-logo-svg" role="img" aria-hidden="true">
+      <a class="navbar-brand bms-logo" href="index.html">
+        <svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" class="bms-logo-svg">
           <defs>
-            <linearGradient id="bmsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:var(--accent-primary);stop-opacity:1" />
-              <stop offset="100%" style="stop-color:var(--border-pink);stop-opacity:1" />
+            <linearGradient id="bmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#f8bbd9;stop-opacity:1" />
             </linearGradient>
           </defs>
-          <text x="60" y="40" font-family="Poppins, Arial, sans-serif" font-size="32" fill="url(#bmsGradient)" text-anchor="middle" font-weight="700" letter-spacing="2">BM</text>
-          <text x="60" y="55" font-family="Poppins, Arial, sans-serif" font-size="8" fill="var(--text-muted)" text-anchor="middle" font-style="italic" font-weight="300">Be Your Modern Self</text>
+          <text x="60" y="40" font-family="Poppins, Arial, sans-serif" font-size="32" fill="url(#bmGradient)" text-anchor="middle" font-weight="700" letter-spacing="2">BM</text>
+          <text x="60" y="55" font-family="Poppins, Arial, sans-serif" font-size="8" fill="#666666" text-anchor="middle" font-style="italic" font-weight="300">Be Your Modern Self</text>
         </svg>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="mens.html">Men's</a></li>
-          <li class="nav-item"><a class="nav-link" href="womens.html">Women's</a></li>
-          <li class="nav-item"><a class="nav-link active" href="kids-gender.html" aria-current="page">Kids</a></li>
+          <li class="nav-item"><a class="nav-link" href="kids-gender.html">Kids</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
   <header>
-    <h1 class="page-title">Girls Collection</h1>
-    <p class="page-subtitle">Beautiful and stylish clothes for girls of all ages</p>
+    <h1 class="page-title">Girls Collection by BM</h1>
+    <p class="page-subtitle">
+      Be Your Modern Self – Cute, trendy, and playful fashion for every girl
+    </p>
   </header>
 
   <!-- Category Buttons with Previews -->
@@ -368,43 +266,33 @@
    <!-- <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('jeans')" onkeypress="if(event.key==='Enter') scrollToSection('jeans')">
       <img src="baby girls jeans/1.jpg" alt="Jeans preview" class="category-preview" />
       <div class="category-label">Jeans</div>
-    </div> 
+    </div>
     <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('tops')" onkeypress="if(event.key==='Enter') scrollToSection('tops')">
       <img src="baby girls tops/1.jpg" alt="Tops preview" class="category-preview" />
       <div class="category-label">Tops</div>
-    </div> -->
+    </div>
   </section>
 
-  <script>
-    // Smooth scroll to section by id (same as mens.html and boys.html)
-    function scrollToSection(id) {
-      const section = document.getElementById(id);
-      if (section) {
-        section.focus({preventScroll:true});
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-  </script>
-
-  <!-- Dresses Section -->
+   Dresses Section -->
   <section id="dresses" class="sub-category-section" tabindex="-1" aria-label="Dresses collection">
     <h2 class="sub-category-title">Dresses</h2>
     <div class="product-grid">
       <div class="product-card">
-        <div class="product-card-inner">
+      <div class="product-card-inner">
           <img src="baby girls dresses\1.jpg" alt="Fashion Dream Girls Embroidered Maxi Dress" class="product-img" />
           <h3 class="product-name">Fashion Dream Girls Embroidered Maxi Dress</h3>
-          <p class="product-price">$644</p>
+          <p class="product-price">₹644</p>
           <a href="https://amzn.to/4gNWSDl" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
         </div>
-      </div>
-      <div class="product-card">
+       </div>
+      <!-- Add more dresses product cards here -->
+       <div class="product-card">
         <div class="product-card-inner">
           <img src="baby girls dresses\2.jpg" alt="Unique Fashion Store Girls' Pink Dress with Floral Print" class="product-img" />
           <h3 class="product-name">Unique Fashion Store Girls' Pink Dress with Floral Print</h3>
-          <p class="product-price">$499</p>
+          <p class="product-price">₹499</p>
           <a href="https://amzn.to/4noxwhL" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -414,7 +302,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\3.jpg" alt="TAGAS Baby-Girl Dress" class="product-img" />
           <h3 class="product-name">TAGAS Baby-Girl Dress</h3>
-          <p class="product-price">$449</p>
+          <p class="product-price">₹449</p>
           <a href="https://amzn.to/4mYRsHn" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -424,7 +312,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\4.jpg" alt="TAGAS Baby-Girl Dress" class="product-img" />
           <h3 class="product-name">TAGAS Baby-Girl Dress</h3>
-          <p class="product-price">$449</p>
+          <p class="product-price">₹449</p>
           <a href="https://amzn.to/4ns5iTF" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -434,7 +322,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\5.jpg" alt="Aarya Girl's Ruffle Neck Printed Midi Length Dresses" class="product-img" />
           <h3 class="product-name">Aarya Girl's Ruffle Neck Printed Midi Length Dresses</h3>
-          <p class="product-price">$399</p>
+          <p class="product-price">₹399</p>
           <a href="https://amzn.to/4nOivpq" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -444,7 +332,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\6.jpg" alt="SRA Girls' Calf-Length Party Dress" class="product-img" />
           <h3 class="product-name">SRA Girls' Calf-Length Party Dress</h3>
-          <p class="product-price">$499</p>
+          <p class="product-price">₹499</p>
           <a href="https://amzn.to/46uLTeA" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -454,7 +342,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\7.jpg" alt="ANG FASHION Girls Chiffon Traditional Solid Printed Midi Long Dress" class="product-img" />
           <h3 class="product-name">ANG FASHION Girls Chiffon Traditional Solid Printed Midi Long Dress</h3>
-          <p class="product-price">$499</p>
+          <p class="product-price">₹499</p>
           <a href="https://amzn.to/46HBsTF" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -464,7 +352,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\8.jpg" alt="Fashion Dream Girl's Fit" class="product-img" />
           <h3 class="product-name">Fashion Dream Girl's Fit</h3>
-          <p class="product-price">$396</p>
+          <p class="product-price">₹396</p>
           <a href="https://amzn.to/4717Cec" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -474,7 +362,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\9.jpg" alt="White Button New Jacket Latest Kids Gown for Girls Maxi Dress" class="product-img" />
           <h3 class="product-name">White Button New Jacket Latest Kids Gown for Girls Maxi Dress</h3>
-          <p class="product-price">$1018</p>
+          <p class="product-price">₹1018</p>
           <a href="https://amzn.to/46HC7ED" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -484,7 +372,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\10.jpg" alt="White Button New Jacket Latest Kids " class="product-img" />
           <h3 class="product-name">White Button New Jacket Latest Kids </h3>
-          <p class="product-price">$829</p>
+          <p class="product-price">₹829</p>
           <a href="https://amzn.to/3VIg0Jl" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -494,7 +382,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\11.jpg" alt="Embroidred Pattu Sattai Gown Dress" class="product-img" />
           <h3 class="product-name">Embroidred Pattu Sattai Gown Dress</h3>
-          <p class="product-price">$984</p>
+          <p class="product-price">₹984</p>
           <a href="https://amzn.to/46VSX45" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -504,7 +392,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\12.jpg" alt="Jwalin Girls Maxi Length Flared Ethnic Dress " class="product-img" />
           <h3 class="product-name">Jwalin Girls Maxi Length Flared Ethnic Dress </h3>
-          <p class="product-price">$678</p>
+          <p class="product-price">₹678</p>
           <a href="https://amzn.to/48KtADw" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -514,7 +402,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\13.jpg" alt="Jwalin Girls Maxi Length Flared Ethnic Dress" class="product-img" />
           <h3 class="product-name">Jwalin Girls Maxi Length Flared Ethnic Dress</h3>
-          <p class="product-price">$678</p>
+          <p class="product-price">₹678</p>
           <a href="https://amzn.to/4mYXasN" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -524,7 +412,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\14.jpg" alt="Jwalin Girl's Printed Maxi Length Dress" class="product-img" />
           <h3 class="product-name">Jwalin Girl's Printed Maxi Length Dress</h3>
-          <p class="product-price">$405</p>
+          <p class="product-price">₹405</p>
           <a href="https://amzn.to/3VFTmS0" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -534,7 +422,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\15.jpg" alt="Organza Readymade Tabby Lehenga Choli" class="product-img" />
           <h3 class="product-name">Organza Readymade Tabby Lehenga Choli</h3>
-          <p class="product-price">$882</p>
+          <p class="product-price">₹882</p>
           <a href="https://amzn.to/46NlPdz" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -544,7 +432,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\16.jpg" alt="Organza Readymade Tabby Lehenga Choli" class="product-img" />
           <h3 class="product-name">Organza Readymade Tabby Lehenga Choli</h3>
-          <p class="product-price">$882</p>
+          <p class="product-price">₹882</p>
           <a href="https://amzn.to/48D3qm7" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -554,7 +442,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\17.jpg" alt=" Readymade Embroidered 3 Piece Lehenga Choli Set" class="product-img" />
           <h3 class="product-name"> Readymade Embroidered 3 Piece Lehenga Choli Set</h3>
-          <p class="product-price">$1396</p>
+          <p class="product-price">₹1396</p>
           <a href="https://amzn.to/46KvW2X" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -564,7 +452,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\18.jpg" alt="AJ DEZINES Kids Ethnic Wear" class="product-img" />
           <h3 class="product-name">AJ DEZINES Kids Ethnic Wear</h3>
-          <p class="product-price">$1919</p>
+          <p class="product-price">₹1919</p>
           <a href="https://amzn.to/4nYsoRF" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -574,7 +462,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\19.jpg" alt="White Button Girl's Silk Blend Readymade Lehenga Choli" class="product-img" />
           <h3 class="product-name">White Button Girl's Silk Blend Readymade Lehenga Choli</h3>
-          <p class="product-price">$932</p>
+          <p class="product-price">₹932</p>
           <a href="https://amzn.to/4pKxDGd" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -584,7 +472,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\20.jpg" alt="Tweeny Mini Girls Kids Pinafore Dress Denim" class="product-img" />
           <h3 class="product-name">Tweeny Mini Girls Kids Pinafore Dress Denim</h3>
-          <p class="product-price">$949</p>
+          <p class="product-price">₹949</p>
           <a href="https://amzn.to/4pCnN9c" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -594,7 +482,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\21.jpg" alt="VYN Denim Full Sleeves Heart Tshirt for Kids Snow" class="product-img" />
           <h3 class="product-name">VYN Denim Full Sleeves Heart Tshirt for Kids Snow</h3>
-          <p class="product-price">$1099</p>
+          <p class="product-price">₹1099</p>
           <a href="https://amzn.to/3WbQNqL" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -604,7 +492,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\22.jpg" alt="Ethnic Long Party Kids Gown for Girls Maxi Dress" class="product-img" />
           <h3 class="product-name">Ethnic Long Party Kids Gown for Girls Maxi Dress</h3>
-          <p class="product-price">$776</p>
+          <p class="product-price">₹776</p>
           <a href="https://amzn.to/4pJb18S" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -614,7 +502,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\23.jpg" alt="Krishtina Girls Laon Below Knee Length Casual Dress" class="product-img" />
           <h3 class="product-name">Krishtina Girls Laon Below Knee Length Casual Dress</h3>
-          <p class="product-price">$499</p>
+          <p class="product-price">₹499</p>
           <a href="https://amzn.to/470MxAE" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -624,7 +512,7 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\24.jpg" alt="Fashion Dream Girls Calf Length Abstract Printed Casual Dress" class="product-img" />
           <h3 class="product-name">Fashion Dream Girls Calf Length Abstract Printed Casual Dress</h3>
-          <p class="product-price">$492</p>
+          <p class="product-price">₹492</p>
           <a href="https://amzn.to/46rN66t" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
@@ -634,73 +522,80 @@
         <div class="product-card-inner">
           <img src="baby girls dresses\25.jpg" alt="PAMBERSTON Girls Geometric Print Dress" class="product-img" />
           <h3 class="product-name">PAMBERSTON Girls Geometric Print Dress</h3>
-          <p class="product-price">$389</p>
+          <p class="product-price">₹389</p>
           <a href="https://amzn.to/486Nqc6" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-shopping-cart"></i> Buy Now
           </a>
         </div>
       </div>
-   </section>   
+    </div>
+  </section>
 
-  <!-- Jeans Section 
-  <section id="jeans" class="sub-category-section" tabindex="-1" aria-label="Jeans collection">
+  <!-- Jeans Section -->
+ <!-- <section id="jeans" class="sub-category-section" tabindex="-1" aria-label="Jeans collection">
     <h2 class="sub-category-title">Jeans</h2>
     <div class="product-grid">
-      <!-- Example product card 
       <div class="product-card">
-        <div class="product-card-inner">
-          <img src="baby girls jeans/1.jpg" alt="Girls Blue Denim Jeans" class="product-img" />
-          <h3 class="product-name">Girls Blue Denim Jeans</h3>
-          <p class="product-price">₹599</p>
-          <a href="#" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
-            <i class="fas fa-shopping-cart"></i> Buy Now
-          </a>
-        </div>
+        <img src="baby girls jeans/1.jpg" alt="Girls Jeans" class="product-img" />
+        <h3 class="product-name">Girls Jeans</h3>
+        <p class="product-price">₹599</p>
+        <a href="#" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-shopping-cart"></i> Buy Now
+        </a>
       </div>
-      <!-- Add more jeans product cards here -->
-    </div>
+      <!-- Add more jeans product cards here 
+    </div> -->
   </section>
 
   <!-- Tops Section 
   <section id="tops" class="sub-category-section" tabindex="-1" aria-label="Tops collection">
     <h2 class="sub-category-title">Tops</h2>
     <div class="product-grid">
-      <!-- Example product card 
       <div class="product-card">
-        <div class="product-card-inner">
-          <img src="baby girls tops/1.jpg" alt="Girls Printed Top" class="product-img" />
-          <h3 class="product-name">Girls Printed Top</h3>
-          <p class="product-price">₹399</p>
-          <a href="#" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
-            <i class="fas fa-shopping-cart"></i> Buy Now
-          </a>
-        </div>
+        <img src="baby girls tops/1.jpg" alt="Girls Top" class="product-img" />
+        <h3 class="product-name">Girls Top</h3>
+        <p class="product-price">₹399</p>
+        <a href="#" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-shopping-cart"></i> Buy Now
+        </a>
       </div>
-      <!-- Add more tops product cards here -->
-    </div>
+      <!-- Add more tops product cards here 
+    </div> -->
   </section>
-  
-  <footer>
-    <div class="container">
-        <div class="social-icons">
-            <a href="#" class="social-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-icon" target="_blank"><i class="fab fa-pinterest-p"></i></a>
-            <a href="#" class="social-icon" target="_blank"><i class="fab fa-twitter"></i></a>
-        </div>
-        <div class="footer-links">
-            <a href="index.html" class="footer-link">Home</a>
-            <a href="mens.html" class="footer-link">Men's Collection</a>
-            <a href="womens.html" class="footer-link">Women's Collection</a>
-            <a href="about.html" class="footer-link">About Us</a>
-            <a href="contact.html" class="footer-link">Contact</a>
-        </div>
-        <div class="copyright">
-            &copy; 2023 BM - Be Your Modern Self. All rights reserved.
-        </div>
-    </div>
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <footer style="background: #fce4ec; color: #333; padding: 3rem 0 2rem; text-align: center; margin-top: 4rem; border-top: 1px solid #f8bbd9;">
+    <div class="social-icons" style="display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2rem;">
+      <a href="#" class="social-icon" aria-label="Facebook" style="color: #666; font-size: 1.5rem; transition: all 0.3s;"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="social-icon" aria-label="Instagram" style="color: #666; font-size: 1.5rem; transition: all 0.3s;"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="social-icon" aria-label="Twitter" style="color: #666; font-size: 1.5rem; transition: all 0.3s;"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-icon" aria-label="Pinterest" style="color: #666; font-size: 1.5rem; transition: all 0.3s;"><i class="fab fa-pinterest"></i></a>
+    </div>
+    <div class="footer-links" style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+      <a href="index.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">Home</a>
+      <a href="mens.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">Men's Collection</a>
+      <a href="kids-gender.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">Kids' Collection</a>
+      <a href="about.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">About Us</a>
+      <a href="contact.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">Contact</a>
+      <a href="#" class="footer-link" style="color: #4fc3f7; text-decoration: none; transition: color 0.3s;">Affiliate Disclosure</a>
+    </div>
+    <p class="copyright" style="color: #666; font-size: 0.9rem;">
+      &copy; 2024 BM - Be Your Modern Self. All rights reserved. Affiliate links may earn commission.
+    </p>
+    <p class="copyright" style="color: #666; font-size: 0.9rem;">
+      Contact: info@bmfashion.com | +91 (9346779598) BM-FASHIONS
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Smooth scroll to section by id
+    function scrollToSection(id) {
+      const section = document.getElementById(id);
+      if (section) {
+        section.focus({preventScroll:true});
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  </script>
 </body>
 </html>
