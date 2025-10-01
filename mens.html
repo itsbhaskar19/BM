@@ -1,1059 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BMS Men's clothing collection: Shirts, Jeans, Jackets, Accessories with 3D interactive previews and affiliate shopping links to Ajio and Amazon">
-    <meta name="keywords" content="BMS men's shirts, men's jeans, jackets men, accessories men, affiliate shopping, 3D clothing">
-    <title>Men's Collection | BMS - Be Your Modern Self</title>
-    <link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-family="Poppins, sans-serif" font-size="60" fill="#e94560" text-anchor="middle" font-weight="bold">BMS</text></svg>'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; } /* Global for precise mobile sizing */
-        
-        :root {
-            --bg-white: #ffffff;
-            --bg-pink: #fce4ec;
-            --text-dark: #333333;
-            --text-muted: #666666;
-            --border-pink: #f8bbd9;
-            --accent-primary: #e94560; /* Site-wide pink */
-            --accent-men: #e94560; /* Deeper pink for men */
-            --accent-women: #4fc3f7; /* Blue for women */
-            --accent-kids: #ffd54f; /* Yellow for kids */
-        }
-        
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            background-color: var(--bg-white);
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden; /* No horizontal scroll on mobile */
-            touch-action: manipulation; /* Smoother mobile interactions */
-        }
-        
-        /* Navigation Bar - Light Pink Theme */
-        .navbar {
-            background: var(--bg-pink);
-            border-bottom: 1px solid var(--border-pink);
-        }
-        
-        .navbar-brand, .nav-link {
-            color: var(--text-dark) !important;
-        }
-        
-        .nav-link:hover {
-            color: var(--accent-men) !important;
-        }
-        
-        /* Hero Header - Light Pink Theme */
-        header { 
-            background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-pink) 100%); 
-            color: var(--text-dark); 
-            padding: 2rem 1rem; 
-            text-align: center; 
-            border-bottom: 1px solid var(--border-pink);
-        }
-        
-        .page-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--accent-men);
-        }
-        
-        .page-subtitle {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-        
-        .sub-category-section {
-            padding: 3rem 0;
-            background: var(--bg-white);
-        }
-        
-        .sub-category-title {
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            color: var(--text-dark);
-            text-align: center;
-            position: relative;
-        }
-        
-        .sub-category-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-men), var(--border-pink));
-        }
-        
-        /* Preview Banner - Pure Auto for Device Images */
-        .sub-preview-img {
-            width: 100%;
-            height: auto; /* Natural height based on width/aspect */
-            max-width: 100%;
-            object-fit: contain; /* Full image visible, no crop */
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.2);
-            display: block;
-        }
-        
-        /* 3D Product Grid - Auto-Adaptive Heights */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
-            gap: 2rem;
-            padding: 0 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            align-items: start;
-        }
-        
-        .product-card {
-            background: var(--bg-pink);
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--border-pink);
-            cursor: pointer;
-            perspective: 1000px;
-            height: auto; /* Adapts to image + content */
-            color: var(--text-dark);
-            display: flex;
-            flex-direction: column;
-            max-width: 100%;
-        }
-        
-        .product-card-inner {
-            transition: transform 0.4s ease;
-            transform-style: preserve-3d;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-        
-        .product-card:hover .product-card-inner {
-            transform: translateY(-10px) rotateX(10deg) translateZ(20px);
-            box-shadow: 0 25px 50px rgba(233, 69, 96, 0.2);
-        }
-        
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-men), var(--border-pink));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-        
-        .product-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        /* Product Images - Pure Auto for Device/Local Files */
-        .product-img {
-            width: 100%;
-            height: auto; /* Dictates card height based on natural size */
-            max-width: 100%;
-            object-fit: contain; /* Preserves aspect, no distortion/crop */
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            display: block;
-            flex-shrink: 0; /* Keeps image intact in flex */
-        }
-        
-        .product-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-            flex-grow: 1; /* Pushes to available space */
-            min-height: 2rem;
-        }
-        
-        .product-price {
-            color: var(--accent-men);
-            font-weight: bold;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            flex-grow: 1;
-            min-height: 1.5rem;
-        }
-        
-        .affiliate-btn {
-            background: linear-gradient(135deg, var(--accent-men), #d6334f);
-            color: white;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-block;
-            width: 100%;
-            flex-shrink: 0;
-            margin-top: auto; /* Sticks to bottom */
-        }
-        
-        .affiliate-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
-            color: white;
-            text-decoration: none;
-        }
-        
-        .affiliate-btn i {
-            margin-right: 0.5rem;
-        }
-        
-        /* Footer - Light Pink */
-        footer {
-            background: var(--bg-pink);
-            color: var(--text-dark);
-            padding: 3rem 0 2rem;
-            text-align: center;
-            margin-top: 4rem;
-            border-top: 1px solid var(--border-pink);
-        }
-        
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .social-icon {
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .social-icon:hover {
-            color: var(--accent-men);
-            transform: translateY(-3px);
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .footer-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-link:hover {
-            color: var(--text-dark);
-        }
-        
-        .copyright {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        
-        /* BMS Logo Styles */
-        .bms-logo { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            text-decoration: none; 
-            color: var(--text-dark); 
-            transition: all 0.3s ease; 
-        }
-        
-        .bms-logo:hover { 
-            transform: scale(1.05); 
-            text-shadow: 0 0 10px var(--accent-primary); 
-        }
-        
-        .bms-logo-svg { 
-            width: 120px; 
-            height: 60px; 
-        }
-        
-        /* Mobile Responsiveness - Perfect Auto for Device Images */
-        @media (max-width: 768px) {
-            .page-title { font-size: 2.2rem; }
-            .sub-category-section { padding: 2rem 0; }
-            .product-grid { 
-                grid-template-columns: 1fr; 
-                gap: 1.5rem; 
-                padding: 0 0.5rem;
-            }
-            .product-card { padding: 1rem; border-radius: 12px; }
-            .product-img { 
-                height: auto; 
-                max-height: 70vh; /* Soft cap - fits tall device images perfectly */
-            }
-            .sub-preview-img { 
-                height: auto; 
-                max-height: 50vh; /* Compact banner on mobile */
-            }
-            .product-card:hover .product-card-inner { transform: translateY(-5px) rotateX(5deg); }
-            .footer-links { flex-direction: column; gap: 1rem; }
-            .bms-logo-svg { width: 100px; height: 50px; }
-            .product-card, .sub-preview-img { 
-                max-width: 100vw; 
-                width: 100%; /* Full mobile width */
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .product-img { max-height: 60vh; } /* Tighter for small phones */
-            .sub-preview-img { max-height: 40vh; }
-            header { padding: 1.5rem 0.5rem; }
-        }
-
-        @media (max-width: 900px) {
-            .product-grid {
-                grid-template-columns: 1fr; /* 1 column on mobile */
-                gap: 1.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="BMS Men's clothing collection: Shirts, Jeans, Jackets, Accessories with 3D interactive previews and affiliate shopping links to Ajio and Amazon" />
+  <meta name="keywords" content="BMS men's shirts, men's jeans, jackets men, accessories men, affiliate shopping, 3D clothing" />
+  <title>Men's Collection | BM - Be Your Modern Self</title>
+  <link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-family="Poppins, sans-serif" font-size="60" fill="#e94560" text-anchor="middle" font-weight="bold">BM</text></svg>' />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-white: #ffffff;
+      --bg-pink: #fce4ec;
+      --text-dark: #333333;
+      --text-muted: #666666;
+      --border-pink: #f8bbd9;
+      --accent-primary: #e94560;
+      --accent-men: #e94560;
+      --accent-secondary: #4fc3f7;
+      --accent-tertiary: #ffd54f;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-white);
+      color: var(--text-dark);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    /* Navbar */
+    .navbar {
+      background: var(--bg-pink);
+      border-bottom: 1px solid var(--border-pink);
+    }
+    .navbar-brand, .nav-link {
+      color: var(--text-dark) !important;
+    }
+    .nav-link:hover {
+      color: var(--accent-men) !important;
+    }
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-pink) 100%);
+      color: var(--text-dark);
+      padding: 2rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border-pink);
+    }
+    .page-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--accent-men);
+    }
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    /* Category Buttons Container */
+    .category-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem 1rem;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto 3rem;
+    }
+    /* Individual Button */
+    .category-button {
+      background: var(--bg-pink);
+      border-radius: 20px;
+      width: 160px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      box-shadow:
+        0 4px 6px rgba(233, 69, 96, 0.3),
+        0 8px 15px rgba(233, 69, 96, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      perspective: 800px;
+      user-select: none;
+      border: 1px solid var(--border-pink);
+    }
+    .category-button:hover {
+      transform: translateY(-10px) rotateX(10deg);
+      box-shadow:
+        0 10px 20px rgba(233, 69, 96, 0.5),
+        0 15px 30px rgba(233, 69, 96, 0.3);
+    }
+    /* Preview Image above button */
+    .category-preview {
+      width: 100%;
+      height: 100px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: white;
+    }
+    /* Button text */
+    .category-label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      user-select: none;
+    }
+    /* Product Sections */
+    .sub-category-section {
+      padding: 3rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+    }
+    .sub-category-title {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+      color: var(--text-dark);
+      text-align: center;
+      position: relative;
+    }
+    .sub-category-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-men), var(--border-pink));
+    }
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+    .product-card {
+      background: var(--bg-pink);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid var(--border-pink);
+      cursor: pointer;
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(233, 69, 96, 0.3);
+    }
+    .product-img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      background: white;
+    }
+    .product-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      flex-grow: 1;
+    }
+    .product-price {
+      color: var(--accent-men);
+      font-weight: bold;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+    .affiliate-btn {
+      background: linear-gradient(135deg, var(--accent-men), #d6334f);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-block;
+      width: 100%;
+    }
+    .affiliate-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+      color: white;
+      text-decoration: none;
+    }
+    .affiliate-btn i {
+      margin-right: 0.5rem;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .category-buttons {
+        gap: 1rem;
+      }
+      .category-button {
+        width: 140px;
+        height: auto;
+      }
+      .category-preview {
+        height: 80px;
+      }
+      .product-img {
+        height: 150px;
+      }
+    }
+    @media (max-width: 480px) {
+      .category-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .category-button {
+        width: 80%;
+        max-width: 300px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation with BMS Logo - Light Pink -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a href="index.html" class="navbar-brand bms-logo">
-                <svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" class="bms-logo-svg">
-                    <defs>
-                        <linearGradient id="bmsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:var(--accent-primary);stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:var(--border-pink);stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <text x="60" y="40" font-family="Poppins, Arial, sans-serif" font-size="32" fill="url(#bmsGradient)" text-anchor="middle" font-weight="700" letter-spacing="2">BMS</text>
-                    <text x="60" y="55" font-family="Poppins, Arial, sans-serif" font-size="8" fill="var(--text-muted)" text-anchor="middle" font-style="italic" font-weight="300">Be Your Modern Self</text>
-                </svg>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="womens.html">Women's</a></li>
-                    <li class="nav-item"><a class="nav-link" href="kids-gender.html">Kids</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a href="index.html" class="navbar-brand bms-logo" style="font-weight:700; font-size:1.5rem; color: var(--text-dark); text-decoration:none;">
+        BM - Be Your Modern Self
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="womens.html">Women's</a></li>
+          <li class="nav-item"><a class="nav-link" href="kids-gender.html">Kids</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <!-- Hero Header - Light Pink -->
-    <header>
-        <h1 class="page-title">Men's Collection</h1>
-        <p class="page-subtitle">Timeless and bold fashion that defines your modern edge and sophistication</p>
-    </header>
+  <!-- Header -->
+  <header>
+    <h1 class="page-title">Men's Collection</h1>
+    <p class="page-subtitle">Timeless and bold fashion that defines your modern edge and sophistication</p>
+  </header>
 
-    <!-- Shirts Section -->
-    <section class="sub-category-section">
-        <h2 class="sub-category-title">Shirts</h2>
-    
-        <!-- Local example: src="images/shirts-preview.jpg" -->
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\1.jpg" alt="TAGDO Men's Regular Fit" class="product-img">
-                    <!-- Local: src="images/casual-shirt.jpg" -->
-                    <h3 class="product-name">TAGDO Men's Regular Fit</h3>
-                    <p class="product-price">₹349</p>
-                    <a href="https://amzn.to/4mDyhCq" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\2 (2).jpg" alt="Leriya" class="product-img">
-                    <!-- Local: src="images/formal-shirt.jpg" -->
-                    <h3 class="product-name">Leriya Fashion Men's Formal</h3>
-                    <p class="product-price">₹349</p>
-                    <a href="https://amzn.to/4q2vGoT" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now    
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\3.jpg" alt="Lymio Casual " class="product-img">
-                    <!-- Local: src="images/denim-shirt.jpg" -->            
-                    <h3 class="product-name">Lymio Casual Regular Fit</h3>
-                    <p class="product-price">₹349</p> 
-                    <a href="https://amzn.to/3VHpV1P" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>  
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\4.jpg" alt="Locomotive" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Locomotive Men's Solid Slim Fit</h3>
-                    <p class="product-price">₹399</p>
-                    <a href="https://amzn.to/3KJMIaN" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\5.jpg" alt="Premium Men's " class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Premium Men's Casual Washed Cotton Twill Shirt </h3>
-                    <p class="product-price">₹999</p>
-                    <a href="https://amzn.to/42Jki76" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\6.jpg" alt="Men's Cotton Shirt | Chinese Collar" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Men's Cotton Shirt | Chinese Collar</h3>
-                    <p class="product-price">₹449</p>
-                    <a href="https://amzn.to/4pLDSJG" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\7.jpg" alt="Highlander Men's Solid Slim Fit Shirt " class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Highlander Men's Solid Slim Fit Shirt </h3>
-                    <p class="product-price">₹415</p>
-                    <a href="https://amzn.to/4gLkngc" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\8.jpg" alt="Highlander Men Shirt" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Highlander Men Shirt</h3>
-                    <p class="product-price">₹449</p>
-                    <a href="https://amzn.to/4gM0JAJ" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\9.jpg" alt="Checked|Long Sleeves|Spread Collar " class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Checked|Long Sleeves|Spread Collar</h3>
-                    <p class="product-price">₹499</p>
-                    <a href="https://amzn.to/46JwdTA" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\10.jpg" alt="Highlander Men's Checkered Slim Fit Shirt" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Highlander Men's Checkered Slim Fit Shirt</h3>
-                    <p class="product-price">₹579</p>
-                    <a href="https://amzn.to/3VZESfX" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\11.jpg" alt="Men's Striped Slim Fit Shirt" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Men's Striped Slim Fit Shirt</h3>
-                    <p class="product-price">₹499</p>
-                    <a href="https://amzn.to/4nr69Uk" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\12.jpg" alt="Premium Men's " class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Men's Relaxed Fit Shirt</h3>
-                    <p class="product-price">₹849</p>
-                    <a href="https://amzn.to/3VHqVmB" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\13.jpg" alt="Majestic Man Comfort Slim Fit Pure Cotton" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Majestic Man Comfort Slim Fit Pure Cotton</h3>
-                    <p class="product-price">₹469</p>
-                    <a href="https://amzn.to/46JwA0q" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\14.jpg" alt="OJASS Men's Regular Fit Casual Denim" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">OJASS Men's Regular Fit Casual Denim </h3>
-                    <p class="product-price">₹619</p>
-                    <a href="https://amzn.to/3KIGXds" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\15.jpg" alt="Men's Casual Washed Cotton Twill Shirt (Regular Fit)" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Men's Casual Washed Cotton Twill Shirt (Regular Fit)</h3>
-                    <p class="product-price">₹999</p>
-                    <a href="https://amzn.to/42dm28C" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\16.jpg" alt="Men's Cotton Shirt | Casual | Plain | Full Sleeve" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Men's Cotton Shirt | Casual | Plain | Full Sleeve</h3>
-                    <p class="product-price">₹449</p>
-                    <a href="https://amzn.to/4mHZofD" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\17.jpg" alt="Amazon Brand - Symbol Men's Cotton Shirt" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Amazon Brand - Symbol Men's Cotton Shirt </h3>
-                    <p class="product-price">₹449</p>
-                    <a href="https://amzn.to/3VIvrkK" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-             <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\18.jpg" alt="Locomotive Men's Oversized Fit Shirt" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Locomotive Men's Oversized Fit Shirt </h3>
-                    <p class="product-price">₹649</p>
-                    <a href="https://amzn.to/4mPk59S" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\19.jpg" alt="Maniac || Mens || Striped" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Maniac || Mens || Striped</h3>
-                    <p class="product-price">₹664</p>
-                    <a href="https://amzn.to/3IzzcWM" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\20.jpg" alt="Peter England Men's Premium Solid Full Sleeve Slim Fit Shirt" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Peter England Men's Premium Solid Full Sleeve Slim Fit Shirt</h3>
-                    <p class="product-price">₹799</p>
-                    <a href="https://amzn.to/3KofKNe" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\21.jpg" alt="Sand Dunes Men’s Stylish Cotton Shirt" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Sand Dunes Men’s Stylish Cotton Shirt</h3>
-                    <p class="product-price">₹649</p>
-                    <a href="https://amzn.to/4nkg660" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\22.jpg" alt="FYLTR Men's Regular Fit Solid Shirt " class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">FYLTR Men's Regular Fit Solid Shirt </h3>
-                    <p class="product-price">₹449</p>
-                    <a href="https://amzn.to/4mDtQri" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\23.jpg" alt="FYLTR Men's Solid 100% Cotton" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">FYLTR Men's Solid 100% Cotton</h3>
-                    <p class="product-price">₹479</p>
-                    <a href="https://amzn.to/3KJoDAY" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\24.jpg" alt="Lymio Men Cotton Regular Fit Shirt" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Lymio Men Cotton Regular Fit Shirt</h3>
-                    <p class="product-price">₹349</p>
-                    <a href="https://amzn.to/4gRz9T2" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="Mens shirts\25.jpg" alt="Highlander Men's Slim Fit Shirt" class="product-img">
-                    <!-- Local: src="images/casual-shirt2.jpg" -->
-                    <h3 class="product-name">Highlander Men's Slim Fit Shirt</h3>
-                    <p class="product-price">₹349</p>
-                    <a href="https://amzn.to/486gSPs" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
+  <!-- Category Buttons with Previews -->
+  <section class="category-buttons" aria-label="Men's collection categories">
+    <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('shirts')" onkeypress="if(event.key==='Enter') scrollToSection('shirts')">
+      <img src="Mens shirts/1.jpg" alt="Shirts preview" class="category-preview" />
+      <div class="category-label">Shirts</div>
+    </div>
+    <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('jeans')" onkeypress="if(event.key==='Enter') scrollToSection('jeans')">
+      <img src="MensJean/1.jpg" alt="Jeans preview" class="category-preview" />
+      <div class="category-label">Jeans</div>
+    </div>
+    <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('jackets')" onkeypress="if(event.key==='Enter') scrollToSection('jackets')">
+      <img src="jacket1.jpg" alt="Jackets preview" class="category-preview" />
+      <div class="category-label">Jackets</div>
+    </div>
+    <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('accessories')" onkeypress="if(event.key==='Enter') scrollToSection('accessories')">
+      <img src="belt.jpg" alt="Accessories preview" class="category-preview" />
+      <div class="category-label">Accessories</div>
+    </div>
+  </section>
 
+  <!-- Shirts Section -->
+  <section id="shirts" class="sub-category-section" tabindex="-1" aria-label="Shirts collection">
+    <h2 class="sub-category-title">Shirts</h2>
+    <div class="product-grid">
+      <!-- Example product card -->
+      <div class="product-card">
+        <img src="Mens shirts/1.jpg" alt="TAGDO Men's Regular Fit" class="product-img" />
+        <h3 class="product-name">TAGDO Men's Regular Fit</h3>
+        <p class="product-price">₹349</p>
+        <a href="https://amzn.to/4mDyhCq" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-shopping-cart"></i> Buy Now
+        </a>
+      </div>
+      <!-- Add other shirts product cards here (you can copy from your existing code) -->
+      <!-- ... -->
+    </div>
+  </section>
 
-        
-        </div>
-    </section>
+  <!-- Jeans Section -->
+  <section id="jeans" class="sub-category-section" tabindex="-1" aria-label="Jeans collection">
+    <h2 class="sub-category-title">Jeans</h2>
+    <div class="product-grid">
+      <!-- Example product card -->
+      <div class="product-card">
+        <img src="MensJean/1.jpg" alt="Highlander Men's Straight Jeans" class="product-img" />
+        <h3 class="product-name">Highlander Men's Straight Jeans</h3>
+        <p class="product-price">₹659</p>
+        <a href="https://amzn.to/4nneSqB" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-shopping-cart"></i> Buy Now
+        </a>
+      </div>
+      <!-- Add other jeans product cards here (you can copy from your existing code) -->
+      <!-- ... -->
+    </div>
+  </section>
 
-    <!-- Jeans Section -->
-    <section class="sub-category-section">
-        <h2 class="sub-category-title">Jeans</h2>
-    
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\1.jpg" alt="Highlander Men's Straight Jeans" class="product-img">
-                    <h3 class="product-name">Highlander Men's Straight Jeans</h3>
-                    <p class="product-price">₹659</p>
-                    <a href="https://amzn.to/4nneSqB" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\2.jpg" alt="Highlander Men's Regular Fit Jeans" class="product-img">
-                    <h3 class="product-name">Highlander Men's Regular Fit Jeans</h3>
-                    <p class="product-price">₹849</p>
-                    <a href="https://amzn.to/3KoVxa2" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\3.jpg" alt="URBAN POCKETS Jeans for Men" class="product-img">
-                    <h3 class="product-name">URBAN POCKETS Jeans for Men</h3>
-                    <p class="product-price">₹599</p>
-                    <a href="https://amzn.to/4872kiq" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\4.jpg" alt=" Cotton Cargo Pants" class="product-img">
-                    <h3 class="product-name">Lymio Men's Regular Fit Low Rise Cargo || Cotton Cargo Pants</h3>
-                    <p class="product-price">₹529</p>
-                    <a href="https://amzn.to/4noRCbI" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\5.jpg" alt=" Cotton Cargo Pants" class="product-img">
-                    <h3 class="product-name">Lymio Men's Regular Fit Low Rise Cargo || Cotton Cargo Pants</h3>
-                    <p class="product-price">₹529</p>
-                    <a href="https://amzn.to/470KFYA" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\6.jpg" alt="Casual Cargos Pant" class="product-img">
-                    <h3 class="product-name">Casual Cargos Pant</h3>
-                    <p class="product-price">₹599</p>
-                    <a href="https://amzn.to/4nqIuU5" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\7.jpg" alt="Lymio Men's Regular Fit Mid Rise Jeans" class="product-img">
-                    <h3 class="product-name">Lymio Men's Regular Fit Mid Rise Jeans</h3>
-                    <p class="product-price">₹579</p>
-                    <a href="https://amzn.to/4nxgAWK" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\8.jpg" alt="Baggy Fit" class="product-img">
-                    <h3 class="product-name">Amazon Brand - Symbol Men's Baggy Fit Cotton Jeans</h3>
-                    <p class="product-price">₹649</p>
-                    <a href="https://amzn.to/3Kr2IOX" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\9.jpg" alt="Dennis Lingo" class="product-img">
-                    <h3 class="product-name">Dennis Lingo Men's |Denim Mid Rise</h3>
-                    <p class="product-price">₹1399</p>
-                    <a href="https://amzn.to/470KIne" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\10.jpg" alt="INKD Men's Classic" class="product-img">
-                    <h3 class="product-name">INKD Men's Classic Regular Fit Jeans with 5 Pocket Styling</h3>
-                    <p class="product-price">₹549</p>
-                    <a href="https://amzn.to/42jmqT0" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\11.jpg" alt="Highlander Men's Regular Jeans" class="product-img">
-                    <h3 class="product-name">Highlander Men's Regular Jeans</h3>
-                    <p class="product-price">₹883</p>
-                    <a href="https://amzn.to/4gI5488" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\12.jpg" alt="Cotton Baggy Jeans" class="product-img">
-                    <h3 class="product-name"> Comfort Clean Look Light Fade Cotton Baggy Jeans</h3>
-                    <p class="product-price">₹779</p>
-                    <a href="https://amzn.to/4gPhpYj" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\13.jpg" alt="Bigbanana Plus Size Men's Regular Fit" class="product-img">
-                    <h3 class="product-name">Bigbanana Plus Size Men's Regular Fit</h3>
-                    <p class="product-price">₹1428</p>
-                    <a href="https://amzn.to/4nXFEpC" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\14.jpg" alt="TAGAS Men" class="product-img">
-                    <h3 class="product-name">TAGAS Men Cotton Slant Pocket Straight Leg Jeans</h3>
-                    <p class="product-price">₹649</p>
-                    <a href="https://amzn.to/3IveEPb" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\15.jpg" alt="TAGAS Men" class="product-img">
-                    <h3 class="product-name">TAGAS Men Cotton Slant Pocket Straight Leg Jeans</h3>
-                    <p class="product-price">₹649</p>
-                    <a href="https://amzn.to/4mCkxrG" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\16.jpg" alt="Maniac Mens Solid Black Baggy fit Cargo Pant" class="product-img">
-                    <h3 class="product-name">Maniac Mens Solid Black Baggy fit Cargo Pant</h3>
-                    <p class="product-price">₹1299</p>
-                    <a href="https://amzn.to/48CFuzh" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\17.jpg" alt="Highlander Men's Regular Fit Jeans" class="product-img">
-                    <h3 class="product-name">Highlander Men's Regular Fit Jeans</h3>
-                    <p class="product-price">₹749</p>
-                    <a href="https://amzn.to/4gVRhej" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\18.jpg" alt="Men Jeans || Jeans for Men || Cargo Jeans" class="product-img">
-                    <h3 class="product-name">Men Jeans || Jeans for Men || Cargo Jeans</h3>
-                    <p class="product-price">₹611</p>
-                    <a href="https://amzn.to/3Kr2ibk" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\19.jpg" alt=" Cargo Jeans" class="product-img">
-                    <h3 class="product-name"> Cargo Jeans</h3>
-                    <p class="product-price">₹813</p>
-                    <a href="https://amzn.to/3KqsvqI" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\20.jpg" alt="JESPAK Relaxed Fit Trouser for Men" class="product-img">
-                    <h3 class="product-name">JESPAK Relaxed Fit Trouser for Men</h3>
-                    <p class="product-price">₹588</p>
-                    <a href="https://amzn.to/4njMdTo" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\21.jpg" alt="Highlander Men's Regular Jeans" class="product-img">
-                    <h3 class="product-name">Highlander Men's Regular Jeans</h3>
-                    <p class="product-price">₹799</p>
-                    <a href="https://amzn.to/3VHRPL5" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\22.jpg" alt="DIVISIVE Men's Loose Baggy Fit Cotton Cargo Pants" class="product-img">
-                    <h3 class="product-name">DIVISIVE Men's Loose Baggy Fit Cotton Cargo Pants</h3>
-                    <p class="product-price">₹979</p>
-                    <a href="https://amzn.to/4gMwlqa" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\23.jpg" alt="Fit Cotton Cargo Pants" class="product-img">
-                    <h3 class="product-name">Fit Cotton Cargo Pants</h3>
-                    <p class="product-price">₹979</p>
-                    <a href="https://amzn.to/4nlcTDj" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\24.jpg" alt="Pure Cotton Baggy Fit Regular " class="product-img">
-                    <h3 class="product-name">Pure Cotton Baggy Fit Regular </h3>
-                    <p class="product-price">₹649</p>
-                    <a href="https://amzn.to/46upyhe" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="MensJean\25.jpg" alt="6 Pocket Cargos for Men" class="product-img">
-                    <h3 class="product-name">6 Pocket Cargos for Men</h3>
-                    <p class="product-price">₹649</p>
-                    <a href="https://amzn.to/4gJ8Gqq" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
+  <!-- Jackets Section -->
+  <section id="jackets" class="sub-category-section" tabindex="-1" aria-label="Jackets collection">
+    <h2 class="sub-category-title">Jackets</h2>
+    <div class="product-grid">
+      <!-- Example jacket product cards -->
+      <div class="product-card">
+        <img src="jacket1.jpg" alt="Men's Casual Jacket" class="product-img" />
+        <h3 class="product-name">Men's Casual Jacket</h3>
+        <p class="product-price">₹899</p>
+        <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-shopping-cart"></i> Buy Now
+        </a>
+      </div>
+      <!-- Add more jackets here -->
+    </div>
+  </section>
 
-        
+  <!-- Accessories Section -->
+  <section id="accessories" class="sub-category-section" tabindex="-1" aria-label="Accessories collection">
+    <h2 class="sub-category-title">Accessories</h2>
+    <div class="product-grid">
+      <!-- Example accessory product cards -->
+      <div class="product-card">
+        <img src="belt.jpg" alt="Men's Leather Belt" class="product-img" />
+        <h3 class="product-name">Men's Leather Belt</h3>
+        <p class="product-price">₹199</p>
+        <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-shopping-cart"></i> Buy Now
+        </a>
+      </div>
+      <!-- Add more accessories here -->
+    </div>
+  </section>
 
-        </div>
-    </section>
+  <!-- Footer -->
+  <footer>
+    <div class="container text-center">
+      <div class="social-icons mb-3">
+        <a href="#" class="social-icon me-3"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon me-3"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon me-3"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
+      </div>
+      <div class="footer-links mb-2">
+        <a href="index.html" class="footer-link me-3">Home</a>
+        <a href="womens.html" class="footer-link me-3">Women's Collection</a>
+        <a href="kids-gender.html" class="footer-link me-3">Kids' Collection</a>
+        <a href="about.html" class="footer-link me-3">About Us</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="copyright text-muted">
+        &copy; 2024 BM - Be Your Modern Self. All rights reserved.
+      </div>
+    </div>
+  </footer>
 
-    <!-- Jackets Section 
-    <section class="sub-category-section">
-        <h2 class="sub-category-title">Jackets</h2>
-    
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="jacket1.jpg" alt="Men's Casual Jacket" class="product-img">
-                    <h3 class="product-name">Men's Casual Jacket</h3>
-                    <p class="product-price">$899</p>
-                    <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="jacket2.jpg" alt="Men's Denim Jacket" class="product-img">
-                    <h3 class="product-name">Men's Denim Jacket</h3>
-                    <p class="product-price">$1099</p>
-                    <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="jacket3.jpg" alt="Men's Leather Jacket" class="product-img">
-                    <h3 class="product-name">Men's Leather Jacket</h3>
-                    <p class="product-price">$1299</p>
-                    <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-     Accessories Section 
-    <section class="sub-category-section">
-        <h2 class="sub-category-title">Accessories</h2>
-    
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="belt.jpg" alt="Men's Leather Belt" class="product-img">
-                    <h3 class="product-name">Men's Leather Belt</h3>
-                    <p class="product-price">$199</p>
-                    <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="watch.jpg" alt="Men's Analog Watch" class="product-img">
-                    <h3 class="product-name">Men's Analog Watch</h3>
-                    <p class="product-price">$299</p>
-                    <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="sunglasses.jpg" alt="Men's Sunglasses" class="product-img">
-                    <h3 class="product-name">Men's Sunglasses</h3>
-                    <p class="product-price">$149</p>
-                    <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-     Featured Products Section - Dynamic 3D Previews 
-    <section class="sub-category-section">
-        <h2 class="sub-category-title">Featured Products</h2>
-    
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="featured1.jpg" alt="Featured Product 1" class="product-img">
-                    <h3 class="product-name">Featured Product 1</h3>
-                    <p class="product-price">$799</p>
-                    <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="featured2.jpg" alt="Featured Product 2" class="product-img">
-                    <h3 class="product-name">Featured Product 2</h3>
-                    <p class="product-price">$899</p>
-                    <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <img src="featured3.jpg" alt="Featured Product 3" class="product-img">
-                    <h3 class="product-name">Featured Product 3</h3>
-                    <p class="product-price">$999</p>
-                    <a href="https://amzn.to/3Kj6t6Y" class="affiliate-btn" target="_blank">
-                        <i class="fas fa-shopping-cart"></i> Buy Now
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    -->
-
-    <!-- Footer - Light Pink -->
-    <footer>
-        <div class="container">
-            <div class="social-icons">
-                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
-            </div>
-            <div class="footer-links">
-                <a href="index.html" class="footer-link">Home</a>
-                <a href="womens.html" class="footer-link">Women's Collection</a>
-                <a href="kids.html" class="footer-link">Kids' Collection</a>
-                <a href="about.html" class="footer-link">About Us</a>
-                <a href="contact.html" class="footer-link">Contact</a>
-            </div>
-            <div class="copyright">
-                &copy; 2023 BMS. All rights reserved.
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Smooth scroll to section by id
+    function scrollToSection(id) {
+      const section = document.getElementById(id);
+      if (section) {
+        section.focus({preventScroll:true});
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  </script>
 </body>
 </html>
