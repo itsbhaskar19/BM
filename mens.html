@@ -228,8 +228,17 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a href="index.html" class="navbar-brand bms-logo" style="font-weight:700; font-size:1.5rem; color: var(--text-dark); text-decoration:none;">
-        BM - Be Your Modern Self
+      <a class="navbar-brand bms-logo" href="index.html">
+        <svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg" class="bms-logo-svg">
+          <defs>
+            <linearGradient id="bmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#f8bbd9;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <text x="60" y="40" font-family="Poppins, Arial, sans-serif" font-size="32" fill="url(#bmGradient)" text-anchor="middle" font-weight="700" letter-spacing="2">BM</text>
+          <text x="60" y="55" font-family="Poppins, Arial, sans-serif" font-size="8" fill="#666666" text-anchor="middle" font-style="italic" font-weight="300">Be Your Modern Self</text>
+        </svg>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -245,8 +254,12 @@
 
   <!-- Header -->
   <header>
-    <h1 class="page-title">Men's Collection</h1>
-    <p class="page-subtitle">Timeless and bold fashion that defines your modern edge and sophistication</p>
+    <h1 class="hero-title" style="font-size:3.5rem; font-weight:700; margin-bottom:1rem; background:linear-gradient(45deg, #e94560, #4fc3f7, #ffd54f); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+      Men's Collection by BM
+    </h1>
+    <p class="hero-subtitle" style="color:#666; font-size:1.2rem; margin-bottom:2rem;">
+      Be Your Modern Self – Timeless and bold fashion that defines your modern edge and sophistication
+    </p>
   </header>
 
   <!-- Category Buttons with Previews -->
@@ -340,25 +353,27 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="container text-center">
-      <div class="social-icons mb-3">
-        <a href="#" class="social-icon me-3"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social-icon me-3"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="social-icon me-3"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="social-icon"><i class="fab fa-pinterest-p"></i></a>
-      </div>
-      <div class="footer-links mb-2">
-        <a href="index.html" class="footer-link me-3">Home</a>
-        <a href="womens.html" class="footer-link me-3">Women's Collection</a>
-        <a href="kids-gender.html" class="footer-link me-3">Kids' Collection</a>
-        <a href="about.html" class="footer-link me-3">About Us</a>
-        <a href="contact.html" class="footer-link">Contact</a>
-      </div>
-      <div class="copyright text-muted">
-        &copy; 2024 BM - Be Your Modern Self. All rights reserved.
-      </div>
+  <footer style="background: #fce4ec; color: #333; padding: 3rem 0 2rem; text-align: center; margin-top: 4rem; border-top: 1px solid #f8bbd9;">
+    <div class="social-icons" style="display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2rem;">
+      <a href="#" class="social-icon" aria-label="Facebook" style="color: #666; font-size: 1.5rem; transition: all 0.3s;"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="social-icon" aria-label="Instagram" style="color: #666; font-size: 1.5rem; transition: all 0.3s;"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="social-icon" aria-label="Twitter" style="color: #666; font-size: 1.5rem; transition: all 0.3s;"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-icon" aria-label="Pinterest" style="color: #666; font-size: 1.5rem; transition: all 0.3s;"><i class="fab fa-pinterest"></i></a>
     </div>
+    <div class="footer-links" style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+      <a href="index.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">Home</a>
+      <a href="womens.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">Women's Collection</a>
+      <a href="kids-gender.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">Kids' Collection</a>
+      <a href="about.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">About Us</a>
+      <a href="contact.html" class="footer-link" style="color: #666; text-decoration: none; transition: color 0.3s;">Contact</a>
+      <a href="#" class="footer-link" style="color: #4fc3f7; text-decoration: none; transition: color 0.3s;">Affiliate Disclosure</a>
+    </div>
+    <p class="copyright" style="color: #666; font-size: 0.9rem;">
+      &copy; 2024 BM - Be Your Modern Self. All rights reserved. Affiliate links may earn commission.
+    </p>
+    <p class="copyright" style="color: #666; font-size: 0.9rem;">
+      Contact: info@bmsfashion.com | +91 (9346779598) BM-FASHIONS
+    </p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
