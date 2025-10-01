@@ -310,11 +310,14 @@
     }
     .category-preview {
       width: 100%;
-      height: auto;
-      max-width: 100%;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 0.5rem;
+      height: 100px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: white;
+      
+    
     }
     .category-label {
       font-size: 1.2rem;
@@ -362,14 +365,14 @@
       <img src="baby girls dresses/1.jpg" alt="Dresses preview" class="category-preview" />
       <div class="category-label">Dresses</div>
     </div>
- <!-- <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('jeans')" onkeypress="if(event.key==='Enter') scrollToSection('jeans')">
+   <!-- <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('jeans')" onkeypress="if(event.key==='Enter') scrollToSection('jeans')">
       <img src="baby girls jeans/1.jpg" alt="Jeans preview" class="category-preview" />
       <div class="category-label">Jeans</div>
-    </div> -->
-   <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('tops')" onkeypress="if(event.key==='Enter') scrollToSection('tops')">
+    </div> 
+    <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('tops')" onkeypress="if(event.key==='Enter') scrollToSection('tops')">
       <img src="baby girls tops/1.jpg" alt="Tops preview" class="category-preview" />
       <div class="category-label">Tops</div>
-    </div> 
+    </div> -->
   </section>
 
   <script>
@@ -654,15 +657,15 @@
           </a>
         </div>
       </div>
-      <!-- Add more jeans product cards here 
+      <!-- Add more jeans product cards here -->
     </div>
   </section>
 
-  <!-- Tops Section -->
+  <!-- Tops Section 
   <section id="tops" class="sub-category-section" tabindex="-1" aria-label="Tops collection">
     <h2 class="sub-category-title">Tops</h2>
     <div class="product-grid">
-       Example product card 
+      <!-- Example product card 
       <div class="product-card">
         <div class="product-card-inner">
           <img src="baby girls tops/1.jpg" alt="Girls Printed Top" class="product-img" />
@@ -673,8 +676,8 @@
           </a>
         </div>
       </div>
-      <!-- Add more tops product cards here 
-    </div> -->
+      <!-- Add more tops product cards here -->
+    </div>
   </section>
   
   <footer>
