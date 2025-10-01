@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="BMS Kids' clothing collection: T-Shirts, Dresses, Jeans, Party Wear with 3D interactive previews and affiliate shopping links to Ajio and Amazon">
     <meta name="keywords" content="BMS kids t-shirts, kids dresses, kids jeans, kids party wear, affiliate shopping, 3D clothing">
-    <title>Boys' Collection | BMS - Be Your Modern Self</title>
+    <title>Boys' Collection | BM - Be Your Modern Self</title>
     <link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-family="Poppins, sans-serif" font-size="60" fill="#e94560" text-anchor="middle" font-weight="bold">BMS</text></svg>'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -200,7 +200,7 @@
         
         .affiliate-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 213, 79, 0.4);
+            box-shadow: 0 5px 15px rgba(255,213,79,0.4);
             color: white;
             text-decoration: none;
         }
@@ -288,6 +288,50 @@
             .sub-preview-img { height: 200px; }
             .bms-logo-svg { width: 100px; height: 50px; }
         }
+
+        /* Category Buttons */
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem 1rem;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 auto 3rem;
+        }
+        
+        .category-button {
+            background: #fce4ec;
+            border-radius: 20px;
+            width: 160px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(255,213,79,0.2), 0 8px 15px rgba(255,213,79,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #f8bbd9;
+        }
+        
+        .category-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255,213,79,0.3), 0 10px 20px rgba(255,213,79,0.2);
+        }
+        
+        .category-preview {
+            width: 100%;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
+        .category-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -302,7 +346,7 @@
                             <stop offset="100%" style="stop-color:var(--border-pink);stop-opacity:1" />
                         </linearGradient>
                     </defs>
-                    <text x="60" y="40" font-family="Poppins, Arial, sans-serif" font-size="32" fill="url(#bmsGradient)" text-anchor="middle" font-weight="700" letter-spacing="2">BMS</text>
+                    <text x="60" y="40" font-family="Poppins, Arial, sans-serif" font-size="32" fill="url(#bmsGradient)" text-anchor="middle" font-weight="700" letter-spacing="2">BM</text>
                     <text x="60" y="55" font-family="Poppins, Arial, sans-serif" font-size="8" fill="var(--text-muted)" text-anchor="middle" font-style="italic" font-weight="300">Be Your Modern Self</text>
                 </svg>
             </a>
@@ -323,10 +367,21 @@
         <p class="page-subtitle">Playful, comfortable, and adorable outfits for the little fashion enthusiasts</p>
     </header>
 
-    <!-- T-Shirts Section -->
-    <section class="sub-category-section">
+    <!-- Category Buttons with Previews -->
+    <section class="category-buttons" aria-label="Boys' collection categories" style="display: flex; justify-content: center; gap: 2rem; padding: 2rem 1rem; flex-wrap: wrap; max-width: 900px; margin: 0 auto 3rem;">
+        <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('shirts')" onkeypress="if(event.key==='Enter') scrollToSection('shirts')" style="background: #fce4ec; border-radius: 20px; width: 160px; padding: 1rem; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(255,213,79,0.2), 0 8px 15px rgba(255,213,79,0.1); transition: transform 0.3s, box-shadow 0.3s; border: 1px solid #f8bbd9;">
+            <img src="kids shirts/1.jpg" alt="Shirts preview" class="category-preview" style="width: 100%; height: 100px; object-fit: contain; border-radius: 12px; margin-bottom: 0.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background: white;">
+            <div class="category-label" style="font-weight: 600; font-size: 1.1rem; color: #333;">Shirts</div>
+        </div>
+        <div class="category-button" tabindex="0" role="button" onclick="scrollToSection('dresses')" onkeypress="if(event.key==='Enter') scrollToSection('dresses')" style="background: #fce4ec; border-radius: 20px; width: 160px; padding: 1rem; text-align: center; cursor: pointer; box-shadow: 0 4px 6px rgba(255,213,79,0.2), 0 8px 15px rgba(255,213,79,0.1); transition: transform 0.3s, box-shadow 0.3s; border: 1px solid #f8bbd9;">
+            <img src="kids dresses/1.jpg" alt="Dresses preview" class="category-preview" style="width: 100%; height: 100px; object-fit: contain; border-radius: 12px; margin-bottom: 0.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background: white;">
+            <div class="category-label" style="font-weight: 600; font-size: 1.1rem; color: #333;">Dresses</div>
+        </div>
+    </section>
+
+    <!-- Shirts Section -->
+    <section id="shirts" class="sub-category-section" tabindex="-1" aria-label="Shirts collection">
         <h2 class="sub-category-title">Shirts</h2>
-        
         <div class="product-grid">
             <div class="product-card">
                 <div class="product-card-inner">
@@ -454,7 +509,7 @@
     </section>
 
     <!-- Dresses Section -->
-    <section class="sub-category-section">
+    <section id="dresses" class="sub-category-section" tabindex="-1" aria-label="Dresses collection">
         <h2 class="sub-category-title">Dresses</h2>
         
         <div class="product-grid">
@@ -697,11 +752,21 @@
                 <a href="contact.html" class="footer-link">Contact</a>
             </div>
             <div class="copyright">
-                &copy; 2023 BMS - Be Your Modern Self. All rights reserved.
+                &copy; 2023 BM - Be Your Modern Self. All rights reserved.
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scroll to section by id
+        function scrollToSection(id) {
+            const section = document.getElementById(id);
+            if (section) {
+                section.focus({preventScroll:true});
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
 </body>
 </html>
